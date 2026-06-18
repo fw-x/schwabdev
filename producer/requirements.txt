@@ -1,0 +1,4 @@
+pydantic-settings
+redis==5.0.1
+schwabdev==3.0.5
+orjson==3.11.8 

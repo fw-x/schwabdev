@@ -1,0 +1,11 @@
+.env
+*.parquet
+.Dockerfile
+docker-compose.yml
+test/
+*.venv
+*.pyc
+*.rdb
+data/.duckdb/*
+*.sqlite*
+redis.chk

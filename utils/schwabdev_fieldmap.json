@@ -1,0 +1,2027 @@
+{
+    "LEVELONE_EQUITIES": [
+        {
+            "fieldId": 0,
+            "fieldName": "Symbol",
+            "type": "String",
+            "fieldDescription": "Ticker symbol in upper case.",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 1,
+            "fieldName": "Bid Price",
+            "type": "double",
+            "fieldDescription": "Current Bid Price",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "Ask Price",
+            "type": "double",
+            "fieldDescription": "Current Ask Price",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "Last Price",
+            "type": "double",
+            "fieldDescription": "Price at which the last trade was matched",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "Bid Size",
+            "type": "int",
+            "fieldDescription": "Number of shares for bid",
+            "notesAndExamples": "Units are \"lots\" (typically 100 shares per lot). Note for NFL data this field can be 0 with a non-zero bid price which representing a bid size of less than 100 shares."
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "Ask Size",
+            "type": "int",
+            "fieldDescription": "Number of shares for ask",
+            "notesAndExamples": "See bid size notes."
+        },
+        {
+            "fieldId": 6,
+            "fieldName": "Ask ID",
+            "type": "char",
+            "fieldDescription": "Exchange with the ask",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 7,
+            "fieldName": "Bid ID",
+            "type": "char",
+            "fieldDescription": "Exchange with the bid",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 8,
+            "fieldName": "Total Volume",
+            "type": "long",
+            "fieldDescription": "Aggregated shares traded throughout the day, including pre/post market hours.",
+            "notesAndExamples": "Volume is set to zero at 7:28am ET."
+        },
+        {
+            "fieldId": 9,
+            "fieldName": "Last Size",
+            "type": "long",
+            "fieldDescription": "Number of shares traded with last trade",
+            "notesAndExamples": "Units are shares"
+        },
+        {
+            "fieldId": 10,
+            "fieldName": "High Price",
+            "type": "double",
+            "fieldDescription": "Day's high trade price",
+            "notesAndExamples": "According to industry standard, only regular session trades set the High and Low. If a stock does not trade in the regular session, high and low will be zero. High/low reset to ZERO at 3:30am ET."
+        },
+        {
+            "fieldId": 11,
+            "fieldName": "Low Price",
+            "type": "double",
+            "fieldDescription": "Day's low trade price",
+            "notesAndExamples": "See High Price notes"
+        },
+        {
+            "fieldId": 12,
+            "fieldName": "Close Price",
+            "type": "double",
+            "fieldDescription": "Previous day's closing price",
+            "notesAndExamples": "Closing prices are updated from the DB at 3:30 AM ET."
+        },
+        {
+            "fieldId": 13,
+            "fieldName": "Exchange ID",
+            "type": "char",
+            "fieldDescription": "Primary \"listing\" Exchange",
+            "notesAndExamples": "As long as the symbol is valid, this data is always present. This field is updated every time the closing prices are loaded from DB. Exchange Mapping: AMEX=A (Both), Indices=0 (Realtime Only), Mutual Fund=3 (Realtime Only), NASDAQ=Q (Both), NYSE=N (Both), Pacific=P (Both), Pinks=9 (Realtime Only), OTCBB=U (Realtime Only)"
+        },
+        {
+            "fieldId": 14,
+            "fieldName": "Marginable",
+            "type": "boolean",
+            "fieldDescription": "Stock approved by the Federal Reserve and an investor's broker as being eligible for providing collateral for margin debt.",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 15,
+            "fieldName": "Description",
+            "type": "String",
+            "fieldDescription": "A company, index or fund name",
+            "notesAndExamples": "Once per day descriptions are loaded from the database at 7:29:50 AM ET."
+        },
+        {
+            "fieldId": 16,
+            "fieldName": "Last ID",
+            "type": "char",
+            "fieldDescription": "Exchange where last trade was executed",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 17,
+            "fieldName": "Open Price",
+            "type": "double",
+            "fieldDescription": "Day's Open Price",
+            "notesAndExamples": "According to industry standard, only regular session trades set the open. If a stock does not trade during the regular session, then the open price is 0. In the pre-market session, open is blank because pre-market session trades do not set the open. Open is set to ZERO at 3:30am ET."
+        },
+        {
+            "fieldId": 18,
+            "fieldName": "Net Change",
+            "type": "double",
+            "fieldDescription": "LastPrice - ClosePrice",
+            "notesAndExamples": "If close is zero, change will be zero"
+        },
+        {
+            "fieldId": 19,
+            "fieldName": "52 Week High",
+            "type": "double",
+            "fieldDescription": "Highest price traded in the past 12 months, or 52 weeks",
+            "notesAndExamples": "Calculated by merging intraday high (from fh) and 52-week high (from db)"
+        },
+        {
+            "fieldId": 20,
+            "fieldName": "52 Week Low",
+            "type": "double",
+            "fieldDescription": "Lowest price traded in the past 12 months, or 52 weeks",
+            "notesAndExamples": "Calculated by merging intraday low (from fh) and 52-week low (from db)"
+        },
+        {
+            "fieldId": 21,
+            "fieldName": "PE Ratio",
+            "type": "double",
+            "fieldDescription": "Price-to-earnings ratio. The P/E equals the price of a share of stock, divided by the company's earnings-per-share.",
+            "notesAndExamples": "Note that the \"price of a share of stock\" in the definition does update during the day so this field has the potential to stream. However, the current implementation uses the closing price and therefore does not stream throughout the day."
+        },
+        {
+            "fieldId": 22,
+            "fieldName": "Annual Dividend Amount",
+            "type": "double",
+            "fieldDescription": "Annual Dividend Amount",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 23,
+            "fieldName": "Dividend Yield",
+            "type": "double",
+            "fieldDescription": "Dividend Yield",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 24,
+            "fieldName": "NAV",
+            "type": "double",
+            "fieldDescription": "Mutual Fund Net Asset Value",
+            "notesAndExamples": "Load various times after market close"
+        },
+        {
+            "fieldId": 25,
+            "fieldName": "Exchange Name",
+            "type": "String",
+            "fieldDescription": "Display name of exchange",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 26,
+            "fieldName": "Dividend Date",
+            "type": "String",
+            "fieldDescription": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 27,
+            "fieldName": "Regular Market Quote",
+            "type": "boolean",
+            "fieldDescription": "Is last quote a regular quote",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 28,
+            "fieldName": "Regular Market Trade",
+            "type": "boolean",
+            "fieldDescription": "Is last trade a regular trade",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 29,
+            "fieldName": "Regular Market Last Price",
+            "type": "double",
+            "fieldDescription": "Only records regular trade",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 30,
+            "fieldName": "Regular Market Last Size",
+            "type": "integer",
+            "fieldDescription": "Currently realize/100, only records regular trade",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 31,
+            "fieldName": "Regular Market Net Change",
+            "type": "double",
+            "fieldDescription": "RegularMarketLastPrice - ClosePrice",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 32,
+            "fieldName": "Security Status",
+            "type": "String",
+            "fieldDescription": "Indicates a symbols current trading status, Normal, Halted, Closed",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 33,
+            "fieldName": "Mark Price",
+            "type": "double",
+            "fieldDescription": "Mark Price",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 34,
+            "fieldName": "Quote Time in Long",
+            "type": "Long",
+            "fieldDescription": "Last time a bid or ask updated in milliseconds since Epoch",
+            "notesAndExamples": "The difference, measured in milliseconds, between the time an event occurs and midnight, January 1, 1970 UTC."
+        },
+        {
+            "fieldId": 35,
+            "fieldName": "Trade Time in Long",
+            "type": "Long",
+            "fieldDescription": "Last trade time in milliseconds since Epoch",
+            "notesAndExamples": "The difference, measured in milliseconds, between the time an event occurs and midnight, January 1, 1970 UTC."
+        },
+        {
+            "fieldId": 36,
+            "fieldName": "Regular Market Trade Time in Long",
+            "type": "Long",
+            "fieldDescription": "Regular market trade time in milliseconds since Epoch",
+            "notesAndExamples": "The difference, measured in milliseconds, between the time an event occurs and midnight, January 1, 1970 UTC."
+        },
+        {
+            "fieldId": 37,
+            "fieldName": "Bid Time",
+            "type": "long",
+            "fieldDescription": "Last bid time in milliseconds since Epoch",
+            "notesAndExamples": "The difference, measured in milliseconds, between the time an event occurs and midnight, January 1, 1970 UTC."
+        },
+        {
+            "fieldId": 38,
+            "fieldName": "Ask Time",
+            "type": "long",
+            "fieldDescription": "Last ask time in milliseconds since Epoch",
+            "notesAndExamples": "The difference, measured in milliseconds, between the time an event occurs and midnight, January 1, 1970 UTC."
+        },
+        {
+            "fieldId": 39,
+            "fieldName": "Ask MIC ID",
+            "type": "String",
+            "fieldDescription": "4-chars Market Identifier Code",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 40,
+            "fieldName": "Bid MIC ID",
+            "type": "String",
+            "fieldDescription": "4-chars Market Identifier Code",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 41,
+            "fieldName": "Last MIC ID",
+            "type": "String",
+            "fieldDescription": "4-chars Market Identifier Code",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 42,
+            "fieldName": "Net Percent Change",
+            "type": "double",
+            "fieldDescription": "Net Percentage Change",
+            "notesAndExamples": "NetChange / ClosePrice * 100"
+        },
+        {
+            "fieldId": 43,
+            "fieldName": "Regular Market Percent Change",
+            "type": "double",
+            "fieldDescription": "Regular market hours percentage change",
+            "notesAndExamples": "RegularMarketNetChange / ClosePrice * 100"
+        },
+        {
+            "fieldId": 44,
+            "fieldName": "Mark Price Net Change",
+            "type": "double",
+            "fieldDescription": "Mark price net change",
+            "notesAndExamples": "7.97"
+        },
+        {
+            "fieldId": 45,
+            "fieldName": "Mark Price Percent Change",
+            "type": "double",
+            "fieldDescription": "Mark price percentage change",
+            "notesAndExamples": "4.2358"
+        },
+        {
+            "fieldId": 46,
+            "fieldName": "Hard to Borrow Quantity",
+            "type": "integer",
+            "fieldDescription": "",
+            "notesAndExamples": "-1 = NULL, >= 0 is valid quantity"
+        },
+        {
+            "fieldId": 47,
+            "fieldName": "Hard To Borrow Rate",
+            "type": "double",
+            "fieldDescription": "",
+            "notesAndExamples": "null = NULL, valid range = -99,999.999 to +99,999.999"
+        },
+        {
+            "fieldId": 48,
+            "fieldName": "Hard to Borrow",
+            "type": "integer",
+            "fieldDescription": "",
+            "notesAndExamples": "-1 = NULL, 1 = true, 0 = false"
+        },
+        {
+            "fieldId": 49,
+            "fieldName": "shortable",
+            "type": "integer",
+            "fieldDescription": "",
+            "notesAndExamples": "-1 = NULL, 1 = true, 0 = false"
+        },
+        {
+            "fieldId": 50,
+            "fieldName": "Post-Market Net Change",
+            "type": "double",
+            "fieldDescription": "Change in price since the end of the regular session (typically 4:00pm)",
+            "notesAndExamples": "PostMarketLastPrice - RegularMarketLastPrice"
+        },
+        {
+            "fieldId": 51,
+            "fieldName": "Post-Market Percent Change",
+            "type": "double",
+            "fieldDescription": "Percent Change in price since the end of the regular session (typically 4:00pm)",
+            "notesAndExamples": "PostMarketNetChange / RegularMarketLastPrice * 100"
+        }
+    ],
+    "LEVELONE_OPTIONS": [
+        {
+            "fieldId": 0,
+            "fieldName": "Symbol",
+            "type": "String",
+            "fieldDescription": "Ticker symbol in upper case.",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 1,
+            "fieldName": "Description",
+            "type": "String",
+            "fieldDescription": "A company, index or fund name",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "Descriptions are loaded from the database daily at 3:30 am ET."
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "Bid Price",
+            "type": "double",
+            "fieldDescription": "Current Bid Price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "No",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "Ask Price",
+            "type": "double",
+            "fieldDescription": "Current Ask Price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "No",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "Last Price",
+            "type": "double",
+            "fieldDescription": "Price at which the last trade was matched",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "No",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "High Price",
+            "type": "double",
+            "fieldDescription": "Day's high trade price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "No",
+            "notesAndExamples": "According to industry standard, only regular session trades set the High and Low. If a stock does not trade in the regular session, high and low will be zero. High/low reset to zero at 3:30am ET."
+        },
+        {
+            "fieldId": 6,
+            "fieldName": "Low Price",
+            "type": "double",
+            "fieldDescription": "Day's low trade price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "No",
+            "notesAndExamples": "See High Price notes"
+        },
+        {
+            "fieldId": 7,
+            "fieldName": "Close Price",
+            "type": "double",
+            "fieldDescription": "Previous day's closing price",
+            "updateRegularHours": "No",
+            "updateAmPmHours": "No",
+            "notesAndExamples": "Closing prices are updated from the DB at 7:29AM ET."
+        },
+        {
+            "fieldId": 8,
+            "fieldName": "Total Volume",
+            "type": "long",
+            "fieldDescription": "Aggregated contracts traded throughout the day, including pre/post market hours.",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "No",
+            "notesAndExamples": "Volume is set to zero at 3:30am ET."
+        },
+        {
+            "fieldId": 9,
+            "fieldName": "Open Interest",
+            "type": "int",
+            "fieldDescription": "",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "No",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 10,
+            "fieldName": "Volatility",
+            "type": "double",
+            "fieldDescription": "Option Risk/Volatility Measurement/Implied",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "No",
+            "notesAndExamples": "Volatility is reset to 0 at 3:30am ET."
+        },
+        {
+            "fieldId": 11,
+            "fieldName": "Money Intrinsic Value",
+            "type": "double",
+            "fieldDescription": "The value an option would have if it were exercised today. Basically, the intrinsic value is the amount by which the strike price of an option is profitable or in-the-money as compared to the underlying stock's price in the market.",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "No",
+            "notesAndExamples": "In-the-money is positive, out-of-the money is negative."
+        },
+        {
+            "fieldId": 12,
+            "fieldName": "Expiration Year",
+            "type": "int",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 13,
+            "fieldName": "Multiplier",
+            "type": "double",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 14,
+            "fieldName": "Digits",
+            "type": "int",
+            "fieldDescription": "Number of decimal places",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 15,
+            "fieldName": "Open Price",
+            "type": "double",
+            "fieldDescription": "Day's Open Price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "No",
+            "notesAndExamples": "According to industry standard, only regular session trades set the open. If a stock does not trade during the regular session, then the open price is 0. In the pre-market session, open is blank because pre-market session trades do not set the open. Open is set to ZERO at 7:28 ET."
+        },
+        {
+            "fieldId": 16,
+            "fieldName": "Bid Size",
+            "type": "int",
+            "fieldDescription": "Number of contracts for bid",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "No",
+            "notesAndExamples": "From FH"
+        },
+        {
+            "fieldId": 17,
+            "fieldName": "Ask Size",
+            "type": "int",
+            "fieldDescription": "Number of contracts for ask",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "No",
+            "notesAndExamples": "From FH"
+        },
+        {
+            "fieldId": 18,
+            "fieldName": "Last Size",
+            "type": "int",
+            "fieldDescription": "Number of contracts traded with last trade",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "No",
+            "notesAndExamples": "Size in 100's"
+        },
+        {
+            "fieldId": 19,
+            "fieldName": "Net Change",
+            "type": "double",
+            "fieldDescription": "Current Last-Prev Close",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "No",
+            "notesAndExamples": "If(close>0) change = last – close Else change=0"
+        },
+        {
+            "fieldId": 20,
+            "fieldName": "Strike Price",
+            "type": "double",
+            "fieldDescription": "Contract strike price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "No",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 21,
+            "fieldName": "Contract Type",
+            "type": "char",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 22,
+            "fieldName": "Underlying",
+            "type": "String",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 23,
+            "fieldName": "Expiration Month",
+            "type": "int",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 24,
+            "fieldName": "Deliverables",
+            "type": "String",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 25,
+            "fieldName": "Time Value",
+            "type": "double",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 26,
+            "fieldName": "Expiration Day",
+            "type": "int",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 27,
+            "fieldName": "Days to Expiration",
+            "type": "int",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 28,
+            "fieldName": "Delta",
+            "type": "double",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 29,
+            "fieldName": "Gamma",
+            "type": "double",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 30,
+            "fieldName": "Theta",
+            "type": "double",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 31,
+            "fieldName": "Vega",
+            "type": "double",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 32,
+            "fieldName": "Rho",
+            "type": "double",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 33,
+            "fieldName": "Security Status",
+            "type": "String",
+            "fieldDescription": "",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "Indicates a symbol's current trading status: Normal, Halted, Closed"
+        },
+        {
+            "fieldId": 34,
+            "fieldName": "Theoretical Option Value",
+            "type": "double",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 35,
+            "fieldName": "Underlying Price",
+            "type": "double",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 36,
+            "fieldName": "UV Expiration Type",
+            "type": "char",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 37,
+            "fieldName": "Mark Price",
+            "type": "double",
+            "fieldDescription": "Mark Price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 38,
+            "fieldName": "Quote Time in Long",
+            "type": "long",
+            "fieldDescription": "Last quote time in milliseconds since Epoch",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "The difference, measured in milliseconds, between the time an event occurs and midnight, January 1, 1970 UTC."
+        },
+        {
+            "fieldId": 39,
+            "fieldName": "Trade Time in Long",
+            "type": "long",
+            "fieldDescription": "Last trade time in milliseconds since Epoch",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "The difference, measured in milliseconds, between the time an event occurs and midnight, January 1, 1970 UTC."
+        },
+        {
+            "fieldId": 40,
+            "fieldName": "Exchange",
+            "type": "char",
+            "fieldDescription": "Exchange character",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "o"
+        },
+        {
+            "fieldId": 41,
+            "fieldName": "Exchange Name",
+            "type": "String",
+            "fieldDescription": "Display name of exchange",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 42,
+            "fieldName": "Last Trading Day",
+            "type": "long",
+            "fieldDescription": "Last Trading Day",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 43,
+            "fieldName": "Settlement Type",
+            "type": "char",
+            "fieldDescription": "Settlement type character",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 44,
+            "fieldName": "Net Percent Change",
+            "type": "double",
+            "fieldDescription": "Net Percentage Change",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "4.2358"
+        },
+        {
+            "fieldId": 45,
+            "fieldName": "Mark Price Net Change",
+            "type": "double",
+            "fieldDescription": "Mark price net change",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "7.97"
+        },
+        {
+            "fieldId": 46,
+            "fieldName": "Mark Price Percent Change",
+            "type": "double",
+            "fieldDescription": "Mark price percentage change",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "4.2358"
+        },
+        {
+            "fieldId": 47,
+            "fieldName": "Implied Yield",
+            "type": "double",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 48,
+            "fieldName": "isPennyPilot",
+            "type": "boolean",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 49,
+            "fieldName": "Option Root",
+            "type": "String",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 50,
+            "fieldName": " 52 Week High",
+            "type": "double",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 51,
+            "fieldName": " 52 Week Low",
+            "type": "double",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 52,
+            "fieldName": "Indicative Ask Price",
+            "type": "double",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": "Only valid for index options (0 for all other options)"
+        },
+        {
+            "fieldId": 53,
+            "fieldName": "Indicative Bid Price",
+            "type": "double",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": "Only valid for index options (0 for all other options)"
+        },
+        {
+            "fieldId": 54,
+            "fieldName": "Indicative Quote Time",
+            "type": "long",
+            "fieldDescription": "The latest time the indicative bid/ask prices updated in milliseconds since Epoch",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": "Only valid for index options (0 for all other options). The difference, measured in milliseconds, between the time an event occurs and midnight, January 1, 1970 UTC."
+        },
+        {
+            "fieldId": 55,
+            "fieldName": "Exercise Type",
+            "type": "char",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        }
+    ],
+    "LEVELONE_FUTURES": [
+        {
+            "fieldId": 0,
+            "fieldName": "Symbol",
+            "type": "String",
+            "fieldDescription": "Ticker symbol in upper case.",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 1,
+            "fieldName": "Bid Price",
+            "type": "double",
+            "fieldDescription": "Current Best Bid Price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "Ask Price",
+            "type": "double",
+            "fieldDescription": "Current Best Ask Price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "Last Price",
+            "type": "double",
+            "fieldDescription": "Price at which the last trade was matched",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "Bid Size",
+            "type": "long",
+            "fieldDescription": "Number of contracts for bid",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "Ask Size",
+            "type": "long",
+            "fieldDescription": "Number of contracts for ask",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 6,
+            "fieldName": "Bid ID",
+            "type": "char",
+            "fieldDescription": "Exchange with the best bid",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "Currently \"?\" for unknown as all quotes are CME"
+        },
+        {
+            "fieldId": 7,
+            "fieldName": "Ask ID",
+            "type": "char",
+            "fieldDescription": "Exchange with the best ask",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "Currently \"?\" for unknown as all quotes are CME"
+        },
+        {
+            "fieldId": 8,
+            "fieldName": "Total Volume",
+            "type": "long",
+            "fieldDescription": "Aggregated contracts traded throughout the day, including pre/post market hours.",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 9,
+            "fieldName": "Last Size",
+            "type": "long",
+            "fieldDescription": "Number of contracts traded with last trade",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 10,
+            "fieldName": "Quote Time",
+            "type": "long",
+            "fieldDescription": "Time of the last quote in milliseconds since epoch",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 11,
+            "fieldName": "Trade Time",
+            "type": "long",
+            "fieldDescription": "Time of the last trade in milliseconds since epoch",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 12,
+            "fieldName": "High Price",
+            "type": "double",
+            "fieldDescription": "Day's high trade price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 13,
+            "fieldName": "Low Price",
+            "type": "double",
+            "fieldDescription": "Day's low trade price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 14,
+            "fieldName": "Close Price",
+            "type": "double",
+            "fieldDescription": "Previous day's closing price",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 15,
+            "fieldName": "Exchange ID",
+            "type": "char",
+            "fieldDescription": "Primary \"listing\" Exchange",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": "Currently \"?\" for unknown as all quotes are CME"
+        },
+        {
+            "fieldId": 16,
+            "fieldName": "Description",
+            "type": "String",
+            "fieldDescription": "Description of the product",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 17,
+            "fieldName": "Last ID",
+            "type": "char",
+            "fieldDescription": "Exchange where last trade was executed",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 18,
+            "fieldName": "Open Price",
+            "type": "double",
+            "fieldDescription": "Day's Open Price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 19,
+            "fieldName": "Net Change",
+            "type": "double",
+            "fieldDescription": "Current Last-Prev Close",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "If(close>0) change = last – close else change=0"
+        },
+        {
+            "fieldId": 20,
+            "fieldName": "Future Percent Change",
+            "type": "double",
+            "fieldDescription": "Current percent change",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "If(close>0) pctChange = (last – close)/close else pctChange=0"
+        },
+        {
+            "fieldId": 21,
+            "fieldName": "Exchange Name",
+            "type": "String",
+            "fieldDescription": "Name of exchange",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 22,
+            "fieldName": "Security Status",
+            "type": "String",
+            "fieldDescription": "Trading status of the symbol",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "Indicates a symbols current trading status, Normal, Halted, Closed"
+        },
+        {
+            "fieldId": 23,
+            "fieldName": "Open Interest",
+            "type": "int",
+            "fieldDescription": "The total number of futures contracts that are not closed or delivered on a particular day",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 24,
+            "fieldName": "Mark",
+            "type": "double",
+            "fieldDescription": "Mark-to-Market value is calculated daily using current prices to determine profit/loss",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "If lastprice is within spread, value = lastprice else value=(bid+ask)/2"
+        },
+        {
+            "fieldId": 25,
+            "fieldName": "Tick",
+            "type": "double",
+            "fieldDescription": "Minimum price movement",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": "Minimum price increment of contract"
+        },
+        {
+            "fieldId": 26,
+            "fieldName": "Tick Amount",
+            "type": "double",
+            "fieldDescription": "Minimum amount that the price of the market can change",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": "Tick * multiplier field"
+        },
+        {
+            "fieldId": 27,
+            "fieldName": "Product",
+            "type": "String",
+            "fieldDescription": "Futures product",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": "From Database"
+        },
+        {
+            "fieldId": 28,
+            "fieldName": "Future Price Format",
+            "type": "String",
+            "fieldDescription": "Display in fraction or decimal format.",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": "Set from FSP Config format is , where D=decimal format, no fractional display. Equity futures will be \"D,D\" to indicate pure decimal. Fixed income futures are fractional, typically \"3,32\". Below is an example for \"3,32\": price=101.8203125 =101 + 0.8203125 (split into whole and fractional) =101 + 26.25/32 (Multiply fractional by implied denomiator) =101 + 26.2/32 (round to numerator decimals to display) =101'262 (display in fractional format)"
+        },
+        {
+            "fieldId": 29,
+            "fieldName": "Future Trading Hours",
+            "type": "String",
+            "fieldDescription": "Trading hours",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": "days: 0 = monday-friday, 1 = sunday, 7 = Saturday. 0 = [-2000,1700] ==> open, close. 1= [-1530,-1630,-1700,1515] ==> open, close, open, close. 0 = [-1800,1700,d, 1700,1900] ==> open, close, DST-flag, open, close"
+        },
+        {
+            "fieldId": 30,
+            "fieldName": "Future Is Tradable",
+            "type": "boolean",
+            "fieldDescription": "Flag to indicate if this future contract is tradable",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 31,
+            "fieldName": "Future Multiplier",
+            "type": "double",
+            "fieldDescription": "Point value",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 32,
+            "fieldName": "Future Is Active",
+            "type": "boolean",
+            "fieldDescription": "Indicates if this contract is active",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 33,
+            "fieldName": "Future Settlement Price",
+            "type": "double",
+            "fieldDescription": "Closing price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 34,
+            "fieldName": "Future Active Symbol",
+            "type": "String",
+            "fieldDescription": "Symbol of the active contract",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 35,
+            "fieldName": "Future Expiration Date",
+            "type": "long",
+            "fieldDescription": "Expiration date of this contract",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": "Milliseconds since epoch"
+        },
+        {
+            "fieldId": 36,
+            "fieldName": "Expiration Style",
+            "type": "String",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 37,
+            "fieldName": "Ask Time",
+            "type": "long",
+            "fieldDescription": "Time of the last ask-side quote in milliseconds since epoch",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 38,
+            "fieldName": "Bid Time",
+            "type": "long",
+            "fieldDescription": "Time of the last bid-side quote in milliseconds since epoch",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 39,
+            "fieldName": "Quoted In Session",
+            "type": "boolean",
+            "fieldDescription": "Indicates if this contract has quoted during the active session",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 40,
+            "fieldName": "Settlement Date",
+            "type": "long",
+            "fieldDescription": "Expiration date of this contract",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": "Milliseconds since epoch"
+        }
+    ],
+    "LEVELONE_FUTURES_OPTIONS": [
+        {
+            "fieldId": 0,
+            "fieldName": "Symbol",
+            "type": "String",
+            "fieldDescription": "Ticker symbol in upper case.",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 1,
+            "fieldName": "Bid Price",
+            "type": "double",
+            "fieldDescription": "Current Bid Price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "Ask Price",
+            "type": "double",
+            "fieldDescription": "Current Ask Price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "Last Price",
+            "type": "double",
+            "fieldDescription": "Price at which the last trade was matched",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "Bid Size",
+            "type": "long",
+            "fieldDescription": "Number of contracts for bid",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "Ask Size",
+            "type": "long",
+            "fieldDescription": "Number of contracts for ask",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 6,
+            "fieldName": "Bid ID",
+            "type": "char",
+            "fieldDescription": "Exchange with the bid",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "Currently \"?\" for unknown as all quotes are CME"
+        },
+        {
+            "fieldId": 7,
+            "fieldName": "Ask ID",
+            "type": "char",
+            "fieldDescription": "Exchange with the ask",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "Currently \"?\" for unknown as all quotes are CME"
+        },
+        {
+            "fieldId": 8,
+            "fieldName": "Total Volume",
+            "type": "long",
+            "fieldDescription": "Aggregated contracts traded throughout the day, including pre/post market hours.",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 9,
+            "fieldName": "Last Size",
+            "type": "long",
+            "fieldDescription": "Number of contracts traded with last trade",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 10,
+            "fieldName": "Quote Time",
+            "type": "long",
+            "fieldDescription": "Trade time of the last quote in milliseconds since epoch",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 11,
+            "fieldName": "Trade Time",
+            "type": "long",
+            "fieldDescription": "Trade time of the last trade in milliseconds since epoch",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 12,
+            "fieldName": "High Price",
+            "type": "double",
+            "fieldDescription": "Day's high trade price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 13,
+            "fieldName": "Low Price",
+            "type": "double",
+            "fieldDescription": "Day's low trade price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 14,
+            "fieldName": "Close Price",
+            "type": "double",
+            "fieldDescription": "Previous day's closing price",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 15,
+            "fieldName": "Last ID",
+            "type": "char",
+            "fieldDescription": "Exchange where last trade was executed",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "Currently \"?\" for unknown as all quotes are CME"
+        },
+        {
+            "fieldId": 16,
+            "fieldName": "Description",
+            "type": "String",
+            "fieldDescription": "Description of the product",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 17,
+            "fieldName": "Open Price",
+            "type": "double",
+            "fieldDescription": "Day's Open Price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 18,
+            "fieldName": "Open Interest",
+            "type": "double",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 19,
+            "fieldName": "Mark",
+            "type": "double",
+            "fieldDescription": "Mark-to-Market value is calculated daily using current prices to determine profit/loss",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "If lastprice is within spread, value = lastprice else value=(bid+ask)/2"
+        },
+        {
+            "fieldId": 20,
+            "fieldName": "Tick",
+            "type": "double",
+            "fieldDescription": "Minimum price movement",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": "Minimum price increment of contract"
+        },
+        {
+            "fieldId": 21,
+            "fieldName": "Tick Amount",
+            "type": "double",
+            "fieldDescription": "Minimum amount that the price of the market can change",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": "Tick * multiplier field"
+        },
+        {
+            "fieldId": 22,
+            "fieldName": "Future Multiplier",
+            "type": "double",
+            "fieldDescription": "Point value",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 23,
+            "fieldName": "Future Settlement Price",
+            "type": "double",
+            "fieldDescription": "Closing price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 24,
+            "fieldName": "Underlying Symbol",
+            "type": "String",
+            "fieldDescription": "Underlying symbol",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 25,
+            "fieldName": "Strike Price",
+            "type": "double",
+            "fieldDescription": "Strike Price",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 26,
+            "fieldName": "Future Expiration Date",
+            "type": "long",
+            "fieldDescription": "Expiration date of this contract",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": "Milliseconds since epoch"
+        },
+        {
+            "fieldId": 27,
+            "fieldName": "Expiration Style",
+            "type": "String",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 28,
+            "fieldName": "Contract Type",
+            "type": "char",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 29,
+            "fieldName": "Security Status",
+            "type": "String",
+            "fieldDescription": "",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "Indicates a symbol's current trading status: Normal, Halted, Closed"
+        },
+        {
+            "fieldId": 30,
+            "fieldName": "Exchange",
+            "type": "char",
+            "fieldDescription": "Exchange character",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 31,
+            "fieldName": "Exchange Name",
+            "type": "String",
+            "fieldDescription": "Display name of exchange",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        }
+    ],
+    "LEVELONE_FOREX": [
+        {
+            "fieldId": 0,
+            "fieldName": "Symbol",
+            "type": "String",
+            "fieldDescription": "Ticker symbol in upper case.",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 1,
+            "fieldName": "Bid Price",
+            "type": "double",
+            "fieldDescription": "Current Bid Price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "Ask Price",
+            "type": "double",
+            "fieldDescription": "Current Ask Price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "Last Price",
+            "type": "double",
+            "fieldDescription": "Price at which the last trade was matched",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "Bid Size",
+            "type": "long",
+            "fieldDescription": "Number of currency pairs for bid",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "Ask Size",
+            "type": "long",
+            "fieldDescription": "Number of currency pairs for ask",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 6,
+            "fieldName": "Total Volume",
+            "type": "long",
+            "fieldDescription": "Aggregated currency pairs traded throughout the day, including pre/post market hours.",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 7,
+            "fieldName": "Last Size",
+            "type": "long",
+            "fieldDescription": "Number of currency pairs traded with last trade",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 8,
+            "fieldName": "Quote Time",
+            "type": "long",
+            "fieldDescription": "Trade time of the last quote in milliseconds since epoch",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 9,
+            "fieldName": "Trade Time",
+            "type": "long",
+            "fieldDescription": "Trade time of the last trade in milliseconds since epoch",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 10,
+            "fieldName": "High Price",
+            "type": "double",
+            "fieldDescription": "Day's high trade price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 11,
+            "fieldName": "Low Price",
+            "type": "double",
+            "fieldDescription": "Day's low trade price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 12,
+            "fieldName": "Close Price",
+            "type": "double",
+            "fieldDescription": "Previous day's closing price",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 13,
+            "fieldName": "Exchange",
+            "type": "char",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 14,
+            "fieldName": "Description",
+            "type": "String",
+            "fieldDescription": "Description of the product",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 15,
+            "fieldName": "Open Price",
+            "type": "double",
+            "fieldDescription": "Day's Open Price",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 16,
+            "fieldName": "Net Change",
+            "type": "double",
+            "fieldDescription": "Current Last - Prev Close",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "If(close>0) change = last – close else change=0"
+        },
+        {
+            "fieldId": 17,
+            "fieldName": "Percent Change",
+            "type": "double",
+            "fieldDescription": "Current percent change",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "If(close>0) pctChange = (last – close)/close else pctChange=0"
+        },
+        {
+            "fieldId": 18,
+            "fieldName": "Exchange Name",
+            "type": "String",
+            "fieldDescription": "Name of exchange",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 19,
+            "fieldName": "Digits",
+            "type": "Int",
+            "fieldDescription": "Valid decimal points",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 20,
+            "fieldName": "Security Status",
+            "type": "String",
+            "fieldDescription": "Trading status of the symbol",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": "Indicates a symbols current trading status, Normal, Halted, Closed"
+        },
+        {
+            "fieldId": 21,
+            "fieldName": "Tick",
+            "type": "double",
+            "fieldDescription": "Minimum price movement",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": "Minimum price increment for pair"
+        },
+        {
+            "fieldId": 22,
+            "fieldName": "Tick Amount",
+            "type": "double",
+            "fieldDescription": "Minimum amount that the price of the market can change",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": "Tick * multiplier field from database"
+        },
+        {
+            "fieldId": 23,
+            "fieldName": "Product",
+            "type": "String",
+            "fieldDescription": "Product name",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 24,
+            "fieldName": "Trading Hours",
+            "type": "String",
+            "fieldDescription": "Trading hours",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 25,
+            "fieldName": "Is Tradable",
+            "type": "boolean",
+            "fieldDescription": "Flag to indicate if this forex is tradable",
+            "updateRegularHours": "N/A",
+            "updateAmPmHours": "N/A",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 26,
+            "fieldName": "Market Maker",
+            "type": "String",
+            "fieldDescription": "",
+            "updateRegularHours": "",
+            "updateAmPmHours": "",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 27,
+            "fieldName": "52 Week High",
+            "type": "double",
+            "fieldDescription": "Higest price traded in the past 12 months, or 52 weeks",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 28,
+            "fieldName": "52 Week Low",
+            "type": "double",
+            "fieldDescription": "Lowest price traded in the past 12 months, or 52 weeks",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        },
+        {
+            "fieldId": 29,
+            "fieldName": "Mark",
+            "type": "double",
+            "fieldDescription": "Mark-to-Market value is calculated daily using current prices to determine profit/loss",
+            "updateRegularHours": "Yes",
+            "updateAmPmHours": "Yes",
+            "notesAndExamples": ""
+        }
+    ],
+    "NYSE_BOOK": {
+        "0": "Symbol",
+        "1": "Market Snapshot Time",
+        "2": "Bid Side Levels",
+        "3": "Ask Side Levels",
+        "Price Levels": [
+            "Price",
+            "Aggregate Size",
+            "Market Maker Count",
+            "Array of Market Makers"
+        ],
+        "Market Makers": [
+            "Market Maker ID",
+            "Size",
+            "Quote Time"
+        ]
+    },
+    "NASDAQ_BOOK": {
+        "0": "Symbol",
+        "1": "Market Snapshot Time",
+        "2": "Bid Side Levels",
+        "3": "Ask Side Levels",
+        "Price Levels": [
+            "Price",
+            "Aggregate Size",
+            "Market Maker Count",
+            "Array of Market Makers"
+        ],
+        "Market Makers": [
+            "Market Maker ID",
+            "Size",
+            "Quote Time"
+        ]
+    },
+    "OPTIONS_BOOK": {
+        "0": "Symbol",
+        "1": "Market Snapshot Time",
+        "2": "Bid Side Levels",
+        "3": "Ask Side Levels",
+        "Price Levels": [
+            "Price",
+            "Aggregate Size",
+            "Market Maker Count",
+            "Array of Market Makers"
+        ],
+        "Market Makers": [
+            "Market Maker ID",
+            "Size",
+            "Quote Time"
+        ]
+    },
+    "CHART_EQUITY": [
+  {
+    "fieldId": 0,
+    "fieldName": "key",
+    "type": "String",
+    "fieldDescription": "Ticker symbol in upper case.",
+    "updateRegularHours": "N/A",
+    "updateAmPmHours": "N/A",
+    "notesAndExamples": ""
+  },
+  {
+    "fieldId": 1,
+    "fieldName": "Open Price",
+    "type": "double",
+    "fieldDescription": "Opening price for the minute",
+    "updateRegularHours": "Yes",
+    "updateAmPmHours": "Yes",
+    "notesAndExamples": ""
+  },
+  {
+    "fieldId": 2,
+    "fieldName": "High Price",
+    "type": "double",
+    "fieldDescription": "Highest price for the minute",
+    "updateRegularHours": "Yes",
+    "updateAmPmHours": "Yes",
+    "notesAndExamples": ""
+  },
+  {
+    "fieldId": 3,
+    "fieldName": "Low Price",
+    "type": "double",
+    "fieldDescription": "Chart's lowest price for the minute",
+    "updateRegularHours": "Yes",
+    "updateAmPmHours": "Yes",
+    "notesAndExamples": ""
+  },
+  {
+    "fieldId": 4,
+    "fieldName": "Close Price",
+    "type": "double",
+    "fieldDescription": "Closing price for the minute",
+    "updateRegularHours": "Yes",
+    "updateAmPmHours": "Yes",
+    "notesAndExamples": ""
+  },
+  {
+    "fieldId": 5,
+    "fieldName": "Volume",
+    "type": "double",
+    "fieldDescription": "Total volume for the minute",
+    "updateRegularHours": "Yes",
+    "updateAmPmHours": "Yes",
+    "notesAndExamples": ""
+  },
+  {
+    "fieldId": 6,
+    "fieldName": "Sequence",
+    "type": "long",
+    "fieldDescription": "Identifies the candle minute",
+    "updateRegularHours": "Yes",
+    "updateAmPmHours": "Yes",
+    "notesAndExamples": ""
+  },
+  {
+    "fieldId": 7,
+    "fieldName": "Chart Time",
+    "type": "long",
+    "fieldDescription": "Milliseconds since Epoch",
+    "updateRegularHours": "Yes",
+    "updateAmPmHours": "Yes",
+    "notesAndExamples": ""
+  },
+  {
+    "fieldId": 8,
+    "fieldName": "Chart Day",
+    "type": "int",
+    "fieldDescription": "",
+    "updateRegularHours": "",
+    "updateAmPmHours": "",
+    "notesAndExamples": ""
+  }
+],
+    "CHART_FUTURES": [
+  {
+    "fieldId": 0,
+    "fieldName": "key",
+    "type": "String",
+    "fieldDescription": "Ticker symbol in upper case.",
+    "updateRegularHours": "N/A",
+    "updateAmPmHours": "N/A",
+    "notesAndExamples": ""
+  },
+  {
+    "fieldId": 1,
+    "fieldName": "Chart Time",
+    "type": "long",
+    "fieldDescription": "Milliseconds since Epoch",
+    "updateRegularHours": "Yes",
+    "updateAmPmHours": "Yes",
+    "notesAndExamples": ""
+  },
+  {
+    "fieldId": 2,
+    "fieldName": "Open Price",
+    "type": "double",
+    "fieldDescription": "Opening price for the minute",
+    "updateRegularHours": "Yes",
+    "updateAmPmHours": "Yes",
+    "notesAndExamples": ""
+  },
+  {
+    "fieldId": 3,
+    "fieldName": "High Price",
+    "type": "double",
+    "fieldDescription": "Highest price for the minute",
+    "updateRegularHours": "Yes",
+    "updateAmPmHours": "Yes",
+    "notesAndExamples": ""
+  },
+  {
+    "fieldId": 4,
+    "fieldName": "Low Price",
+    "type": "double",
+    "fieldDescription": "Chart's lowest price for the minute",
+    "updateRegularHours": "Yes",
+    "updateAmPmHours": "Yes",
+    "notesAndExamples": ""
+  },
+  {
+    "fieldId": 5,
+    "fieldName": "Close Price",
+    "type": "double",
+    "fieldDescription": "Closing price for the minute",
+    "updateRegularHours": "Yes",
+    "updateAmPmHours": "Yes",
+    "notesAndExamples": ""
+  },
+  {
+    "fieldId": 6,
+    "fieldName": "Volume",
+    "type": "double",
+    "fieldDescription": "Total volume for the minute",
+    "updateRegularHours": "Yes",
+    "updateAmPmHours": "Yes",
+    "notesAndExamples": ""
+  }
+],
+    "SCREENER_EQUITY": [
+        "symbol",
+        "timestamp",
+        "sortField",
+        "frequency",
+        "Items"
+    ],
+    "SCREENER_OPTION": [
+        "symbol",
+        "timestamp",
+        "sortField",
+        "frequency",
+        "Items"
+    ],
+    "ACCT_ACTIVITY": {
+        "seq": "Sequence",
+        "key": "Key",
+        "1": "Account",
+        "2": "Message Type",
+        "3": "Message Data"
+    }
+}
