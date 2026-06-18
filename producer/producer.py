@@ -107,6 +107,7 @@ if __name__ == '__main__':
 
     logger.info("Starting Producer...")
 
+    # TODO: Need to Paramertize the Below to make it more dynamic
     spy_chain = OptionChainBuilder(strike_step=1).option_list_generator('SPY',759.57)
     spx_chain = OptionChainBuilder(strike_step=5).option_list_generator('SPXW',7609.78)
 
