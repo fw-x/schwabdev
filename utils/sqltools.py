@@ -8,6 +8,7 @@ from pathlib import Path
 class DuckLakeEngine:
     conn:duckdb.DuckDBPyConnection
     catalog_name:str
+    read_only:bool = False
     sqlite_path:str = field(default_factory=lambda: str((Path().home()/'data/metadata.sqlite').resolve()))
     data_path:str = field(default_factory=lambda: str((Path().home()/'data/ducklake').resolve()))
     configs: dict = field(default_factory=lambda: {"extensions": ['ducklake', 'sqlite','parquet'],"pragmas":{"wal_autocheckpoint_entries":"2000"}})
@@ -16,22 +17,21 @@ class DuckLakeEngine:
         if use:
             self.conn.execute(f"USE {self.catalog_name}")
 
-            
-
     def connect_and_mount(self):
-
         for ext in self.configs['extensions']:
             self.conn.execute(f"INSTALL {ext}")
             self.conn.execute(f"LOAD {ext}")
 
         try: 
+            is_read_only = str(self.read_only).lower()
             self.conn.execute(f"""
                 ATTACH 'ducklake:{self.sqlite_path}' AS {self.catalog_name} (
-                    DATA_PATH '{self.data_path}',
-                    META_TYPE 'sqlite',
-                    META_JOURNAL_MODE 'WAL',
-                    META_BUSY_TIMEOUT 500,
-                    OVERRIDE_DATA_PATH true
+                     DATA_PATH '{self.data_path}'
+                    ,META_TYPE 'sqlite'
+                    ,META_JOURNAL_MODE 'WAL'
+                    ,META_BUSY_TIMEOUT 500
+                    ,OVERRIDE_DATA_PATH true
+                    ,READ_ONLY {is_read_only} 
                 );""")
             if self.configs.get('pragmas',{}):
                 for k,v in self.configs.get('pragmas').items(): # type: ignore
