@@ -7,7 +7,7 @@ import orjson
 import redis
 from redis.retry import Retry
 from redis.backoff import ExponentialBackoff
-from utils.sqltools import DuckLakeEngine
+from utils.sqltools import DuckEngine, SQLITE_PATH, DATA_PATH
 from pathlib import Path
 import pyarrow as pa
 
@@ -98,29 +98,13 @@ class SchwabPayloadTransformer:
 
 @dataclass
 class DuckDBRepository:
-    engine: DuckLakeEngine
+    engine: DuckEngine
     table_name: str
-
-    def init_table(self):
-        """Initializes the targeted cold storage table."""
-        self.engine.conn.execute(f"""
-        CREATE TABLE IF NOT EXISTS stream_tbl_new (
-            message_id VARCHAR,
-            service VARCHAR,
-            timestamp TIMESTAMP,
-            symbol VARCHAR,
-            payload JSON,
-            part_root VARCHAR,
-            part_date VARCHAR
-        );
-                                 
-        ALTER TABLE stream_tbl_new SET PARTITIONED BY (service, part_root, part_date);
-                                 
-        """)
 
     def save_arrow_table(self, arrow_table: pa.Table):
         """Streams the pre-allocated Arrow Table memory blocks into the storage cache."""
         if arrow_table is None or len(arrow_table) == 0:
+            logger.error("Arrow Table is None or Empty!!!!")
             return
             
         # The engine queries the variable name 'arrow_table' from local scope natively
@@ -181,9 +165,7 @@ class SchwabStreamPipeline:
         self.TIME_LIMIT_SECONDS: int = 30
 
     def run(self):
-        # Initialize storage layout structures
-        self.repository.init_table()
-        
+        # Initialize storage layout structures     
         self._flushed_checkpoint_id = self.checkpoint_manager.get_last_id()
         self.source.last_id = self._flushed_checkpoint_id
         logger.info(f"Resuming stream from file checkpoint: {self._flushed_checkpoint_id}")
@@ -255,7 +237,7 @@ class SchwabStreamPipeline:
             m_start = time.time()
             
             self.repository.engine.conn.execute(
-                f"CALL ducklake_flush_inlined_data('{self.repository.engine.catalog_name}', table_name => '{self.repository.table_name}');"
+                f"CALL ducklake_flush_inlined_data('{self.repository.engine.configs.catalog.name}', table_name => '{self.repository.table_name}');"
             )
             self.repository.engine.conn.execute("FORCE CHECKPOINT;")
             self._last_flush_time = time.time()
@@ -277,23 +259,28 @@ def main():
     
     logger.info("Initializing producer components...")
     
-    engine = DuckLakeEngine(
+    engine = DuckEngine(
         conn=duckdb.connect(config={
             "home_directory": f"{Path().home() / 'data'}"
         }),
-        catalog_name="schwab_lake"
     )
-    engine.connect_and_mount()
-    logger.info("DuckLake engine connected and mounted.")
-    engine.use_db()
-    logger.info("Using catalog: %s", engine.catalog_name)
+    engine.configs.update(
+        {
+        "catalog": {
+            "name":"schwab_lake",
+            "sqlite_path": SQLITE_PATH,
+            "data_path": DATA_PATH
+                }
+            }
+        )
+    engine.bootstrap()
+    engine.conn.execute("SET ducklake_default_data_inlining_row_limit = 10_000;")
+    options_repo = DuckDBRepository(engine=engine, table_name="stream_tbl_new")
 
     # Performance Core: Scale up row limits so 5k records don't trigger forced disk flushes instantly
-    engine.conn.execute("SET ducklake_default_data_inlining_row_limit = 100_000;")
 
     source = RedisStreamSource(client=REDIS_CLIENT, stream="SCHWAB")
     transformer = SchwabPayloadTransformer()
-    options_repo = DuckDBRepository(engine=engine, table_name="stream_tbl_new")
     checkpoint_manager = FileCheckpointManager()
 
     pipeline = SchwabStreamPipeline(
