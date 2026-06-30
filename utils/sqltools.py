@@ -1,9 +1,8 @@
-from dataclasses import dataclass
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, Optional, Tuple
 from collections import UserDict
 import duckdb 
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict
 import logging
 import sys
 import re
@@ -43,8 +42,6 @@ class DuckConfigs(UserDict):
 class DuckEngine:
     def __init__(self, conn: duckdb.DuckDBPyConnection):
         self.conn = conn
-        
-        # Pure, vanilla Python dictionary
         self.configs = DuckConfigs({
             "extensions": ["parquet", "ducklake", "sqlite"],
             "pragmas": {
@@ -89,7 +86,6 @@ class DuckEngine:
 
         name, sqlite_p, data_p = cfg["name"], cfg["sqlite_path"], cfg["data_path"]
 
-        # Formulate DuckLake custom extension connection string
         attach_sql = f"""
             ATTACH 'ducklake:{sqlite_p}' AS "{name}" (
                 DATA_PATH '{data_p}'
@@ -119,11 +115,9 @@ class DuckEngine:
 
         alias, db_path = cfg["alias"], cfg["db_path"]
 
-        # Ensure parent storage directories physically exist on the machine
         path = Path(db_path).resolve()
         path.parent.mkdir(parents=True, exist_ok=True)
 
-        # Formulate native DuckDB file attachment string
         attach_sql = f"ATTACH '{path}' AS \"{alias}\" (READ_ONLY {str(read_only).upper()});"
         self._run_attachment_pipeline(alias, attach_sql, env_label="Local Storage")
 
@@ -131,26 +125,23 @@ class DuckEngine:
     def bootstrap(self, ddl_path: Optional[str] = None, read_only_lake: bool = False) -> None:
         """
         One-stop initialization routine to fully prepare the container's database environment.
-        Ensures hardware tunings, attachments, and schema states are sequentially satisfied.
         """
         logger.info("Initializing system environment bootstrap sequence...")
 
-        # 1. Fire baseline global configurations and plug-ins
         self.apply_configs()
 
-        # 2. Safely mount the Data Lake if it's defined in configs
         if self._has_config_block("catalog"):
             self.attach_duck_lake(read_only=read_only_lake)
 
-        # 3. Safely mount the Local Database node if it's defined in configs
         if self._has_config_block("local_db"):
             self.attach_local_db(read_only=False)
 
-        # 4. Invoke the DDL deployment manager if a schema directory is provided
-        if ddl_path:
-            from utils.sqltools import DDLManager  # Kept local to isolate imports if preferred
-            manager = DDLManager(db_engine=self, ddl_root_path=ddl_path)
-            manager.deploy_schema()
+        if not ddl_path:
+            logger.error("Missing param: ddl_path")
+            raise ValueError("Missing ddl directory path for sql files...")
+            
+        manager = DDLManager(db_engine=self, ddl_root_path=ddl_path)
+        manager.deploy_schema()
             
         logger.info("System bootstrap complete. Environment is ready for execution.")
 
@@ -254,16 +245,13 @@ class DDLManager:
 
         logger.info("Starting database schema deployment from: '%s'", self.ddl_root)
         
-        # 1. Discover and sequence all SQL files across subdirectories
         sql_files = self._resolve_execution_order()
 
-        # 2. Iterate and execute the assets
         success_count = 0
         for file_path in sql_files:
             if self._execute_ddl_file(file_path):
                 success_count += 1
 
-        # 3. Output structural summary status
         logger.info(
             "Schema deployment complete. Successfully executed %d/%d DDL scripts.",
             success_count, len(sql_files)
@@ -281,7 +269,6 @@ class DDLManager:
                 logger.debug("Skipping empty DDL file: '%s'", relative_display_path)
                 return True
 
-            # DuckDB safely processes multi-statement blocks separated by semicolons natively
             self.engine.conn.execute(sql_script)
             
             logger.info("  ✓ Executed DDL: %s", relative_display_path)
@@ -327,7 +314,6 @@ class DDLManager:
             logger.error("Graph validation failed! The following missing dependencies were declared: %s", missing_nodes)
             raise ValueError(f"DDL Graph references undefined dependencies: {missing_nodes}")
 
-        # Python returns the exact executable sequence, perfectly sorted!
         return [file_mapping[node] for node in ts.static_order() if node in file_mapping]
 
 
