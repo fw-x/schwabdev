@@ -125,6 +125,10 @@ class DuckEngine:
     def bootstrap(self, ddl_path: Optional[str] = None, read_only_lake: bool = False) -> None:
         """
         One-stop initialization routine to fully prepare the container's database environment.
+        Params: 
+            ddl_path is not requried for sucessful bootstrap
+            
+        TODO: Need to move read_only flag to config block for a more controlled enviornment setup
         """
         logger.info("Initializing system environment bootstrap sequence...")
 
@@ -136,12 +140,9 @@ class DuckEngine:
         if self._has_config_block("local_db"):
             self.attach_local_db(read_only=False)
 
-        if not ddl_path:
-            logger.error("Missing param: ddl_path")
-            raise ValueError("Missing ddl directory path for sql files...")
-            
-        manager = DDLManager(db_engine=self, ddl_root_path=ddl_path)
-        manager.deploy_schema()
+        if ddl_path:
+            manager = DDLManager(db_engine=self, ddl_root_path=ddl_path)
+            manager.deploy_schema()
             
         logger.info("System bootstrap complete. Environment is ready for execution.")
 
