@@ -7,7 +7,7 @@ import orjson
 import redis
 from redis.retry import Retry
 from redis.backoff import ExponentialBackoff
-from utils.sqltools import DuckEngine, SQLITE_PATH, DATA_PATH
+from utils.sqltools import DuckEngine, BASE_DIR
 from pathlib import Path
 import pyarrow as pa
 
@@ -22,7 +22,6 @@ logging.basicConfig(
 )
 logging.getLogger("redis").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
-
 
 @dataclass
 class RedisStreamSource:
@@ -152,8 +151,9 @@ class SchwabStreamPipeline:
     transformer: SchwabPayloadTransformer
     repository: DuckDBRepository
     checkpoint_manager: FileCheckpointManager
+    BATCH_SIZE_LIMIT: int = 0
+    TIME_LIMIT_SECONDS: int = 20
 
-    # Using deque as a faster buffer allocation layer
     _buffer: list = field(default_factory=list)
     _last_flush_time: float = field(default_factory=time.time)
 
@@ -162,7 +162,6 @@ class SchwabStreamPipeline:
 
     def __post_init__(self): 
         self.BATCH_SIZE_LIMIT: int = self.source.batch_count       
-        self.TIME_LIMIT_SECONDS: int = 30
 
     def run(self):
         # Initialize storage layout structures     
@@ -237,7 +236,7 @@ class SchwabStreamPipeline:
             m_start = time.time()
             
             self.repository.engine.conn.execute(
-                f"CALL ducklake_flush_inlined_data('{self.repository.engine.configs.catalog.name}', table_name => '{self.repository.table_name}');"
+                f"""CALL ducklake_flush_inlined_data('{self.repository.engine.configs.catalog["name"]}', table_name => '{self.repository.table_name}');"""
             )
             self.repository.engine.conn.execute("FORCE CHECKPOINT;")
             self._last_flush_time = time.time()
@@ -268,12 +267,13 @@ def main():
         {
         "catalog": {
             "name":"schwab_lake",
-            "sqlite_path": SQLITE_PATH,
-            "data_path": DATA_PATH
+            "sqlite_path": (BASE_DIR/"data/metadata/metadata.sqlite").resolve(),
+            "data_path": (BASE_DIR/"data/ducklake").resolve()
                 }
             }
         )
     engine.bootstrap()
+    engine.use_db('schwab_lake')
     engine.conn.execute("SET ducklake_default_data_inlining_row_limit = 10_000;")
     options_repo = DuckDBRepository(engine=engine, table_name="stream_tbl_new")
 
@@ -293,6 +293,4 @@ def main():
     pipeline.run()
 
 if __name__ == "__main__":
-    main()
-
- 
+   main()
