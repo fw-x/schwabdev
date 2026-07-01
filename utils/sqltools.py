@@ -20,7 +20,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-BASE_DIR = Path('~').expanduser().resolve(True)/"schwabdev"
+BASE_DIR = Path('~').expanduser().resolve(True)
 SQLITE_PATH = str((BASE_DIR/"data/metadata/metadata.sqlite").resolve())
 DATA_PATH = str((BASE_DIR/"data/ducklake").resolve())
 
@@ -177,6 +177,7 @@ class DuckEngine:
         check_qry = f"SELECT 1 FROM duckdb_databases() WHERE database_name = '{name}';"
         try:
             result = self.conn.execute(check_qry).df()
+            logger.debug(result)
             return not result.empty
         except Exception:
             return False
@@ -201,30 +202,39 @@ class DuckEngine:
 
 
     def _log_mount_success(self, name: str, env_label: str) -> None:
-            """Generic Reporter: Inspects and outputs formatted operational metadata reports."""
-            query = f"""
-                SELECT database_name as name, path, type, readonly, encrypted, options 
-                FROM duckdb_databases() 
-                WHERE database_name = '{name}';
-            """
-            records = self.conn.execute(query).df().to_dict(orient='records')
-            if not records:
-                return
+        """Generic Reporter: Inspects and outputs formatted operational metadata reports."""
+        query = f"""
+            SELECT database_name as name, path, type, readonly, encrypted, options 
+            FROM duckdb_databases() 
+            WHERE database_name = '{name}';
+        """
+        # 1. Execute the query
+        cursor = self.conn.execute(query)
+        
+        # 2. Grab the raw rows
+        rows = cursor.fetchall()
+        if not rows:
+            return
 
-            log_block = [
-                f"Successfully mounted {env_label}: '{name}'",
-                "—" * 65
-            ]
-            for key, val in records[0].items():
-                if not isinstance(val, dict):
-                    log_block.append(f"  {key:<12} : {val}")
-                else:
-                    log_block.append(f"  {key:<12} :")
-                    for sub_key, sub_val in val.items():
-                        log_block.append(f"    ↳ {sub_key:<24} = {sub_val}")
-            log_block.append("—" * 65)
-            
-            logger.info("\n" + "\n".join(log_block))
+        # 3. Zip column names with the first row's data to create a dict
+        columns = [desc[0] for desc in cursor.description]
+        record = dict(zip(columns, rows[0]))
+
+        log_block = [
+            f"Successfully mounted {env_label}: '{name}'",
+            "—" * 65
+        ]
+        
+        for key, val in record.items():
+            if not isinstance(val, dict):
+                log_block.append(f"  {key:<12} : {val}")
+            else:
+                log_block.append(f"  {key:<12} :")
+                for sub_key, sub_val in val.items():
+                    log_block.append(f"    ↳ {sub_key:<24} = {sub_val}")
+        log_block.append("—" * 65)
+        
+        logger.info("\n" + "\n".join(log_block))
 
     def _has_config_block(self, block_name: str) -> bool:
         """Helper to safely check for configuration blocks across standard or NamedDict scopes."""
